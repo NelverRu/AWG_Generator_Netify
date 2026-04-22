@@ -46,14 +46,10 @@ Endpoint = 89.22.237.214:4500`
 
 // Функция для скачивания статического конфига
 function downloadStaticConfig(countryCode, countryName) {
-    const info = document.getElementById('info');
     const config = STATIC_CONFIGS[countryCode];
     
     if (!config) {
-        info.textContent = '❌ Ошибка: Конфигурация не найдена';
-        setTimeout(() => {
-            info.textContent = '✨ Нажмите на кнопку для получения конфигурации';
-        }, 3000);
+        console.error('Config not found');
         return;
     }
     
@@ -69,18 +65,8 @@ function downloadStaticConfig(countryCode, countryName) {
         link.download = fileName;
         link.click();
         URL.revokeObjectURL(url);
-        
-        info.textContent = `✅ Конфигурация ${countryName} скачана как ${fileName}`;
-        
-        setTimeout(() => {
-            info.textContent = '✨ Нажмите на кнопку для получения конфигурации';
-        }, 3000);
     } catch (error) {
-        console.error('Error:', error);
-        info.textContent = '❌ Ошибка при скачивании конфигурации';
-        setTimeout(() => {
-            info.textContent = '✨ Нажмите на кнопку для получения конфигурации';
-        }, 3000);
+        console.error('Error downloading config:', error);
     }
 }
 
@@ -88,7 +74,6 @@ function downloadStaticConfig(countryCode, countryName) {
 async function generateConfig(configType, buttonId) {
     const button = document.getElementById(buttonId);
     const buttonText = button.querySelector('.button__text');
-    const info = document.getElementById('info');
 
     // Сохраняем оригинальный текст кнопки
     const originalText = buttonText.textContent;
@@ -124,25 +109,23 @@ async function generateConfig(configType, buttonId) {
             setTimeout(() => {
                 buttonText.textContent = originalText;
             }, 2000);
-            
-            info.textContent = `✅ Конфигурация сгенерирована и скачана как ${fileName}`;
         } else {
-            info.textContent = `❌ Ошибка: ${data.message}`;
+            console.error('Generation error:', data.message);
+            buttonText.textContent = `❌ Ошибка`;
+            setTimeout(() => {
+                buttonText.textContent = originalText;
+            }, 2000);
         }
     } catch (error) {
         console.error('Error:', error);
-        info.textContent = '❌ Ошибка при генерации конфигурации. Проверьте соединение.';
+        buttonText.textContent = `❌ Ошибка`;
+        setTimeout(() => {
+            buttonText.textContent = originalText;
+        }, 2000);
     } finally {
         // Убираем загрузку
         button.disabled = false;
         button.classList.remove("button--loading");
-        
-        // Очищаем info через 4 секунды
-        setTimeout(() => {
-            if (info.textContent !== '✨ Нажмите на кнопку для получения конфигурации') {
-                info.textContent = '✨ Нажмите на кнопку для получения конфигурации';
-            }
-        }, 4000);
     }
 }
 
