@@ -44,6 +44,46 @@ PersistentKeepalive = 25
 Endpoint = 89.22.237.214:4500`
 };
 
+// Универсальная функция для скачивания файла (работает на всех устройствах)
+function downloadFile(content, fileName, mimeType = 'application/text') {
+    // Пытаемся использовать атрибут download (работает на большинстве ПК)
+    const blob = new Blob([content], { type: mimeType });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = fileName;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    
+    // Для iOS: если не сработало, показываем инструкцию
+    setTimeout(() => {
+        if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+            // На iOS иногда не срабатывает download, показываем альтернативный способ
+            const iosMessage = document.createElement('div');
+            iosMessage.style.position = 'fixed';
+            iosMessage.style.bottom = '20px';
+            iosMessage.style.left = '20px';
+            iosMessage.style.right = '20px';
+            iosMessage.style.backgroundColor = 'rgba(0,0,0,0.9)';
+            iosMessage.style.color = '#00ff64';
+            iosMessage.style.padding = '12px';
+            iosMessage.style.borderRadius = '12px';
+            iosMessage.style.textAlign = 'center';
+            iosMessage.style.fontSize = '12px';
+            iosMessage.style.zIndex = '9999';
+            iosMessage.style.backdropFilter = 'blur(10px)';
+            iosMessage.style.border = '1px solid rgba(0,255,100,0.3)';
+            iosMessage.innerHTML = `📁 Файл ${fileName} сохранён<br>Нажмите и удерживайте, чтобы сохранить, если скачивание не началось`;
+            document.body.appendChild(iosMessage);
+            setTimeout(() => {
+                iosMessage.remove();
+            }, 3000);
+        }
+    }, 100);
+}
+
 // Функция для скачивания статического конфига
 function downloadStaticConfig(countryCode, countryName) {
     const config = STATIC_CONFIGS[countryCode];
@@ -57,19 +97,14 @@ function downloadStaticConfig(countryCode, countryName) {
         const randomNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
         const fileName = `AmneziaWG_${countryName}_${randomNumber}.conf`;
         
-        const blob = new Blob([config], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = fileName;
-        link.click();
-        URL.revokeObjectURL(url);
+        // Используем универсальную функцию скачивания с правильным MIME-типом
+        downloadFile(config, fileName, 'application/x-wireguard-profile');
     } catch (error) {
         console.error('Error downloading config:', error);
     }
 }
 
-// Функция для генерации динамического конфига (Vercel)
+// Функция для генерации динамического конфига
 async function generateConfig(configType, buttonId) {
     const button = document.getElementById(buttonId);
     const buttonText = button.querySelector('.button__text');
@@ -79,7 +114,6 @@ async function generateConfig(configType, buttonId) {
     button.classList.add("button--loading");
 
     try {
-        // ВАЖНО: URL для Vercel
         const response = await fetch('/api/warp', {
             method: 'POST',
             headers: {
@@ -94,10 +128,9 @@ async function generateConfig(configType, buttonId) {
             const randomNumber = Math.floor(Math.random() * (99 - 10 + 1)) + 10;
             const fileName = `AmneziaWG_${configType}_${randomNumber}.conf`;
             
-            const link = document.createElement('a');
-            link.href = 'data:application/octet-stream;base64,' + data.content;
-            link.download = fileName;
-            link.click();
+            // Декодируем base64 и скачиваем
+            const configContent = atob(data.content);
+            downloadFile(configContent, fileName, 'application/x-wireguard-profile');
 
             buttonText.textContent = `✅ Скачано!`;
             setTimeout(() => {
