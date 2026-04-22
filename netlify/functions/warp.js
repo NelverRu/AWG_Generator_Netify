@@ -84,8 +84,7 @@ class WarpConfigBuilder {
   static DEVICE_PROFILES = {
     computer: { jc: 4, jmin: 40, jmax: 70 },
     phone: { jc: 120, jmin: 23, jmax: 911 },
-    awg15: { jc: 120, jmin: 23, jmax: 911 },
-  };
+   };
 
   static build(params) {
     const interfaceSection = this.buildInterfaceSection(params);
@@ -132,11 +131,9 @@ class WarpConfigBuilder {
 
 // 4 фиксированных конфига с разными параметрами
 const CONFIG_TYPES = {
-  1: { deviceType: 'computer', endpoint: '162.159.195.1:500', name: 'AmneziaWG (Стандарт)' },
-  2: { deviceType: 'phone', endpoint: '162.159.192.1:500', name: 'AmneziaWG (Мобильный)' },
-  3: { deviceType: 'awg15', endpoint: '162.159.193.1:500', name: 'AmneziaWG (AWG)' },
-  4: { deviceType: 'computer', endpoint: '162.159.194.1:500', name: 'AmneziaWG (Альтернатива)' }
-};
+  1: { deviceType: 'computer', endpoint: 'engage.cloudflareclient.com:2408', name: 'AmneziaWG (Стандарт)' },
+  2: { deviceType: 'phone', endpoint: 'engage.cloudflareclient.com:2408', name: 'AmneziaWG (Мобильный)' }
+  };
 
 export async function handler(event, context) {
   const corsHeaders = {
