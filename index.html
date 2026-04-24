@@ -2,21 +2,602 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AmneziaWG Cyber Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>AmneziaWG Generator | Modern VPN Configs</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            min-height: 100vh;
+            background: #0a0a0a;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Динамический градиентный фон */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: linear-gradient(125deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 10s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Плавающие частицы */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 255, 100, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float linear infinite;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Контейнер */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Заголовок */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInUp 0.8s ease;
+        }
+
+        .logo {
+            font-size: 48px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00ff64, #00d4ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        /* Карточки */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+            margin-bottom: 40px;
+        }
+
+        /* Стеклянная карточка */
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 28px 24px;
+            border: 1px solid rgba(0, 255, 100, 0.2);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 100, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(0, 255, 100, 0.5);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 100, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .card:active {
+            transform: translateY(0);
+        }
+
+        /* Иконки карточек */
+        .card-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+        }
+
+        .card-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: #00ff64;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.5);
+            line-height: 1.5;
+        }
+
+        .card-badge {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 6px 12px;
+            background: rgba(0, 255, 100, 0.1);
+            border-radius: 20px;
+            font-size: 12px;
+            color: #00ff64;
+            border: 1px solid rgba(0, 255, 100, 0.3);
+        }
+
+        /* Секция с динамическими конфигами */
+        .section-title {
+            text-align: center;
+            font-size: 28px;
+            font-weight: 600;
+            color: white;
+            margin: 48px 0 24px;
+            letter-spacing: -0.5px;
+        }
+
+        .dynamic-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        /* Кнопки в карточках */
+        .card-button {
+            width: 100%;
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.15), rgba(0, 212, 255, 0.15));
+            border: 1px solid rgba(0, 255, 100, 0.3);
+            border-radius: 16px;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            color: #00ff64;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            margin-top: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .card-button:hover {
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.25), rgba(0, 212, 255, 0.25));
+            border-color: #00ff64;
+            box-shadow: 0 0 20px rgba(0, 255, 100, 0.2);
+        }
+
+        .card-button:active {
+            transform: scale(0.98);
+        }
+
+        .card-button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Анимация загрузки */
+        .button--loading {
+            position: relative;
+        }
+
+        .button--loading .button__text {
+            visibility: hidden;
+        }
+
+        .button--loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            top: 50%;
+            left: 50%;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #00ff64;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: buttonSpin 0.8s linear infinite;
+        }
+
+        @keyframes buttonSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Уведомление */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 14px 28px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 255, 100, 0.3);
+            color: #00ff64;
+            font-size: 14px;
+            font-weight: 500;
+            z-index: 1000;
+            transition: transform 0.3s ease;
+            white-space: nowrap;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Анимации */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Адаптивность */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px 16px;
+            }
+            
+            .logo {
+                font-size: 32px;
+            }
+            
+            .subtitle {
+                font-size: 14px;
+            }
+            
+            .card-title {
+                font-size: 20px;
+            }
+            
+            .section-title {
+                font-size: 24px;
+                margin: 32px 0 20px;
+            }
+            
+            .toast {
+                white-space: normal;
+                text-align: center;
+                max-width: 90%;
+                font-size: 12px;
+            }
+        }
+    </style>
 </head>
 <body>
-    <div class="scan-line"></div>
+    <div class="animated-bg"></div>
+    <div class="particles" id="particles"></div>
+
     <div class="container">
-        <!-- Ваш HTML с кнопками -->
-        <button id="staticFI" class="cyber-button">🇫🇮 AWG Finland</button>
-        <button id="staticDE" class="cyber-button">🇩🇪 AWG Germany</button>
-        <button id="generateButton1" class="cyber-button">💻 AWG PC</button>
-        <button id="generateButton2" class="cyber-button">📱 AWG Mobile</button>
+        <div class="header">
+            <div class="logo">⚡ AmneziaWG</div>
+            <div class="subtitle">Современные VPN конфигурации с защитой нового поколения</div>
+        </div>
+
+        <!-- Статические конфиги -->
+        <div class="cards-grid">
+            <div class="card" id="staticFI">
+                <div class="card-icon">🇫🇮</div>
+                <div class="card-title">Финляндия</div>
+                <div class="card-desc">Статический конфиг с сервером в Финляндии<br>Стабильное соединение</div>
+                <div class="card-badge">AWG_FI.conf</div>
+                <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('FI')">
+                    <span class="button__text">📥 Скачать конфиг</span>
+                </button>
+            </div>
+
+            <div class="card" id="staticDE">
+                <div class="card-icon">🇩🇪</div>
+                <div class="card-title">Германия</div>
+                <div class="card-desc">Статический конфиг с сервером в Германии<br>Высокая скорость</div>
+                <div class="card-badge">AWG_DE.conf</div>
+                <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('DE')">
+                    <span class="button__text">📥 Скачать конфиг</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="section-title">✨ Динамические конфиги WARP</div>
+
+        <div class="dynamic-grid">
+            <div class="card">
+                <div class="card-icon">💻</div>
+                <div class="card-title">ПК / Ноутбук</div>
+                <div class="card-desc">Оптимизирован для компьютеров<br>Высокая производительность</div>
+                <div class="card-badge">AWG_PC_ЧЧ_ММ.conf</div>
+                <button id="generateButton1" class="card-button">
+                    <span class="button__text">🚀 Сгенерировать</span>
+                </button>
+            </div>
+
+            <div class="card">
+                <div class="card-icon">📱</div>
+                <div class="card-title">Мобильный</div>
+                <div class="card-desc">Оптимизирован для телефонов<br>Экономия батареи</div>
+                <div class="card-badge">AWG_Mob_ЧЧ_ММ.conf</div>
+                <button id="generateButton2" class="card-button">
+                    <span class="button__text">🚀 Сгенерировать</span>
+                </button>
+            </div>
+        </div>
     </div>
-    
-    <script src="script.js"></script>
+
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // ========== АНИМАЦИЯ ФОНА ==========
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = window.innerWidth < 768 ? 30 : 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                const size = Math.random() * 4 + 2;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 8 + 4 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // ========== УВЕДОМЛЕНИЯ ==========
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.style.color = isError ? '#ff4444' : '#00ff64';
+            toast.style.borderColor = isError ? 'rgba(255, 68, 68, 0.3)' : 'rgba(0, 255, 100, 0.3)';
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ========== СТАТИЧЕСКИЕ КОНФИГИ ==========
+        const STATIC_CONFIGS = {
+            FI: `[Interface]
+PrivateKey = aG1Lg0PM/8ebyFq9fQaOBIbaKIKRaOhBNp5rdoj9snM=
+Address = 10.8.0.10/24
+DNS = 1.1.1.1
+Jc = 4
+Jmin = 40
+Jmax = 70
+S1 = 97
+S2 = 137
+H1 = 206835555
+H2 = 1798466344
+H3 = 291743724
+H4 = 2035958533
+
+[Peer]
+PublicKey = 0DyNEKF2bF9qNaZtUrwpJuJbVxRmEClyFoBzkIvd3VY=
+PresharedKey = Qwr+6NoQ+zFApzdU7COx3aweQ+bzA9ctFkecRu9P9M8=
+AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 0
+Endpoint = gw-fin1.itvhost.ru:51820`,
+
+            DE: `[Interface]
+PrivateKey = KDuUWx4YXXhSsFOYN1ccfvZs3HSGgOXErBpy08imHU4=
+Address = 172.16.0.2/32, 2606:4700:110:8b62:c21c:b9a5:5182:86fb/128
+DNS = 1.1.1.1, 1.0.0.1, 2606:4700:4700::1111, 2606:4700:4700::1001
+MTU = 1280
+S1 = 0
+S2 = 0
+Jc = 4
+Jmin = 40
+Jmax = 70
+H1 = 1
+H2 = 2
+H3 = 3
+H4 = 4
+I1 = <b 0xce000000010897a297ecc34cd6dd000044d0ec2e2e1ea2991f467ace4222129b5a098823784694b4897b9986ae0b7280135fa85e196d9ad980b150122129ce2a9379531b0fd3e871ca5fdb883c369832f730e272d7b8b74f393f9f0fa43f11e510ecb2219a52984410c204cf875585340c62238e14ad04dff382f2c200e0ee22fe743b9c6b8b043121c5710ec289f471c91ee414fca8b8be8419ae8ce7ffc53837f6ade262891895f3f4cecd31bc93ac5599e18e4f01b472362b8056c3172b513051f8322d1062997ef4a383b01706598d08d48c221d30e74c7ce000cdad36b706b1bf9b0607c32ec4b3203a4ee21ab64df336212b9758280803fcab14933b0e7ee1e04a7becce3e2633f4852585c567894a5f9efe9706a151b615856647e8b7dba69ab357b3982f554549bef9256111b2d67afde0b496f16962d4957ff654232aa9e845b61463908309cfd9de0a6abf5f425f577d7e5f6440652aa8da5f73588e82e9470f3b21b27b28c649506ae1a7f5f15b876f56abc4615f49911549b9bb39dd804fde182bd2dcec0c33bad9b138ca07d4a4a1650a2c2686acea05727e2a78962a840ae428f55627516e73c83dd8893b02358e81b524b4d99fda6df52b3a8d7a5291326e7ac9d773c5b43b8444554ef5aea104a738ed650aa979674bbed38da58ac29d87c29d387d80b526065baeb073ce65f075ccb56e47533aef357dceaa8293a523c5f6f790be90e4731123d3c6152a70576e90b4ab5bc5ead01576c68ab633ff7d36dcde2a0b2c68897e1acfc4d6483aaaeb635dd63c96b2b6a7a2bfe042f6aed82e5363aa850aace12ee3b1a93f30d8ab9537df483152a5527faca21efc9981b304f11fc95336f5b9637b174c5a0659e2b22e159a9fed4b8e93047371175b1d6d9cc8ab745f3b2281537d1c75fb9451871864efa5d184c38c185fd203de206751b92620f7c369e031d2041e152040920ac2c5ab5340bfc9d0561176abf10a147287ea90758575ac6a9f5ac9f390d0d5b23ee12af583383d994e22c0cf42383834bcd3ada1b3825a0664d8f3fb678261d57601ddf94a8a68a7c273a18c08aa99c7ad8c6c42eab67718843597ec9930457359dfdfbce024afc2dcf9348579a57d8d3490b2fa99f278f1c37d87dad9b221acd575192ffae1784f8e60ec7cee4068b6b988f0433d96d6a1b1865f4e155e9fe020279f434f3bf1bd117b717b92f6cd1cc9bea7d45978bcc3f24bda631a36910110a6ec06da35f8966c9279d130347594f13e9e07514fa370754d1424c0a1545c5070ef9fb2acd14233e8a50bfc5978b5bdf8bc1714731f798d21e2004117c61f2989dd44f0cf027b27d4019e81ed4b5c31db347c4a3a4d85048d7093cf16753d7b0d15e078f5c7a5205dc2f87e330a1f716738dce1c6180e9d02869b5546f1c4d2748f8c90d9693cba4e0079297d22fd61402dea32ff0eb69ebd65a5d0b687d87e3a8b2c42b648aa723c7c7daf37abcc4bb85caea2ee8f55bec20e913b3324ab8f5c3304f820d42ad1b9f2ffc1a3af9927136b4419e1e579ab4c2ae3c776d293d397d575df181e6cae0a4ada5d67ecea171cca3288d57c7bbdaee3befe745fb7d634f70386d873b90c4d6c6596bb65af68f9e5121e67ebf0d89d3c909ceedfb32ce9575a7758ff080724e1ab5d5f43074ecb53a479af21ed03d7b6899c36631c0166f9d47e5e1d4528a5d3d3f744029c4b1c190cbfbad06f5f83f7ad0429fa9a2719c56ffe3783460e166de2d8>
+
+[Peer]
+PublicKey = bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=
+AllowedIPs = 0.0.0.0/0, ::/0
+PersistentKeepalive = 25
+Endpoint = 89.22.237.214:4500`
+        };
+
+        // Функция времени по Москве
+        function getMoscowTimeString() {
+            const now = new Date();
+            const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+            const hours = String(moscowTime.getUTCHours()).padStart(2, '0');
+            const minutes = String(moscowTime.getUTCMinutes()).padStart(2, '0');
+            return `${hours}_${minutes}`;
+        }
+
+        // Скачивание файла
+        function downloadFile(content, fileName, mimeType = 'application/text') {
+            const blob = new Blob([content], { type: mimeType });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            // iOS поддержка
+            setTimeout(() => {
+                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    showToast(`Файл ${fileName} сохранён. Нажмите и удерживайте для сохранения.`);
+                }
+            }, 100);
+        }
+
+        // Скачивание статического конфига
+        window.downloadStaticConfig = function(countryCode) {
+            const config = STATIC_CONFIGS[countryCode];
+            if (!config) {
+                showToast('Ошибка: конфиг не найден', true);
+                return;
+            }
+            try {
+                downloadFile(config, `AWG_${countryCode}.conf`, 'application/x-wireguard-profile');
+                showToast(`✅ AWG_${countryCode}.conf скачан`);
+            } catch (error) {
+                showToast('❌ Ошибка при скачивании', true);
+            }
+        };
+
+        // Генерация динамического конфига
+        async function generateConfig(configType, buttonId) {
+            const button = document.getElementById(buttonId);
+            const buttonText = button.querySelector('.button__text');
+            const originalText = buttonText.textContent;
+            
+            button.disabled = true;
+            button.classList.add("button--loading");
+
+            try {
+                const response = await fetch('/api/warp', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: configType })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    const moscowTime = getMoscowTimeString();
+                    const devicePrefix = configType === 1 ? 'PC' : 'Mob';
+                    const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
+                    const configContent = atob(data.content);
+                    downloadFile(configContent, fileName, 'application/x-wireguard-profile');
+                    
+                    buttonText.textContent = `✅ Скачано!`;
+                    showToast(`✅ Конфиг ${fileName} успешно сгенерирован`);
+                    setTimeout(() => buttonText.textContent = originalText, 2000);
+                } else {
+                    throw new Error(data.message || 'Ошибка генерации');
+                }
+            } catch (error) {
+                console.error(error);
+                buttonText.textContent = `❌ Ошибка`;
+                showToast(`❌ ${error.message}`, true);
+                setTimeout(() => buttonText.textContent = originalText, 2000);
+            } finally {
+                button.disabled = false;
+                button.classList.remove("button--loading");
+            }
+        }
+
+        // Назначение обработчиков
+        document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
+        document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
+
+        // Добавляем эффект ripple на карточки
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.backgroundColor = 'rgba(0, 255, 100, 0.2)';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.left = e.clientX - card.getBoundingClientRect().left + 'px';
+                ripple.style.top = e.clientY - card.getBoundingClientRect().top + 'px';
+                card.style.position = 'relative';
+                card.style.overflow = 'hidden';
+                card.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: translate(-50%, -50%) scale(30);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
 </body>
 </html>
