@@ -1,4 +1,87 @@
-// Статические конфигурации
+// ========== МАТРИЧНЫЙ ФОН ==========
+function initMatrixBackground() {
+    const canvas = document.createElement('canvas');
+    canvas.id = 'matrixCanvas';
+    canvas.style.position = 'fixed';
+    canvas.style.top = '0';
+    canvas.style.left = '0';
+    canvas.style.width = '100%';
+    canvas.style.height = '100%';
+    canvas.style.zIndex = '-1';
+    canvas.style.opacity = '0.15'; // Прозрачность для ненавязчивости
+    document.body.insertBefore(canvas, document.body.firstChild);
+    
+    const ctx = canvas.getContext('2d');
+    
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    
+    canvas.width = width;
+    canvas.height = height;
+    
+    // Символы для матрицы (кириллица + латиница + цифры)
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
+    const charArray = chars.split('');
+    
+    const fontSize = 14;
+    const columns = Math.floor(width / fontSize);
+    
+    // Позиции каждого столбца (Y координата)
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+        drops[i] = Math.random() * -height;
+    }
+    
+    // Скорость падения
+    const speed = 0.5;
+    
+    function draw() {
+        // Полупрозрачный чёрный прямоугольник для создания эффекта "хвоста"
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, width, height);
+        
+        ctx.fillStyle = '#00ff64'; // Зелёный цвет как у кнопок
+        ctx.font = fontSize + 'px monospace';
+        
+        for (let i = 0; i < drops.length; i++) {
+            // Случайный символ
+            const char = charArray[Math.floor(Math.random() * charArray.length)];
+            
+            // Рисуем символ
+            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
+            
+            // Обновляем позицию
+            drops[i] += speed;
+            
+            // Сбрасываем, если ушли за пределы экрана
+            if (drops[i] * fontSize > height && Math.random() > 0.98) {
+                drops[i] = 0;
+            }
+        }
+        
+        requestAnimationFrame(draw);
+    }
+    
+    draw();
+    
+    // Обновляем размеры при изменении окна
+    window.addEventListener('resize', () => {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = width;
+        canvas.height = height;
+        
+        // Пересчитываем количество столбцов
+        const newColumns = Math.floor(width / fontSize);
+        if (newColumns > drops.length) {
+            for (let i = drops.length; i < newColumns; i++) {
+                drops[i] = Math.random() * -height;
+            }
+        }
+    });
+}
+
+// Статические конфигурации (остаётся без изменений)
 const STATIC_CONFIGS = {
     FI: `[Interface]
 PrivateKey = aG1Lg0PM/8ebyFq9fQaOBIbaKIKRaOhBNp5rdoj9snM=
@@ -171,8 +254,18 @@ async function generateConfig(configType, buttonId) {
     }
 }
 
-// Назначаем обработчики
-document.getElementById('staticFI').onclick = () => downloadStaticConfig('FI', 'Finland');
-document.getElementById('staticDE').onclick = () => downloadStaticConfig('DE', 'Germany');
-document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
-document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
+// Запускаем матричный фон после загрузки страницы
+document.addEventListener('DOMContentLoaded', () => {
+    initMatrixBackground();
+    
+    // Назначаем обработчики
+    const staticFIBtn = document.getElementById('staticFI');
+    const staticDEBtn = document.getElementById('staticDE');
+    const generateBtn1 = document.getElementById('generateButton1');
+    const generateBtn2 = document.getElementById('generateButton2');
+    
+    if (staticFIBtn) staticFIBtn.onclick = () => downloadStaticConfig('FI', 'Finland');
+    if (staticDEBtn) staticDEBtn.onclick = () => downloadStaticConfig('DE', 'Germany');
+    if (generateBtn1) generateBtn1.onclick = () => generateConfig(1, 'generateButton1');
+    if (generateBtn2) generateBtn2.onclick = () => generateConfig(2, 'generateButton2');
+});
