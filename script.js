@@ -1,14 +1,13 @@
-// ========== МАТРИЧНЫЙ ФОН ==========
-function initMatrixBackground() {
+// ========== КИБЕРПАНК ФОН (СЕТКА + НЕОН) ==========
+function initCyberpunkBackground() {
     const canvas = document.createElement('canvas');
-    canvas.id = 'matrixCanvas';
+    canvas.id = 'cyberpunkCanvas';
     canvas.style.position = 'fixed';
     canvas.style.top = '0';
     canvas.style.left = '0';
     canvas.style.width = '100%';
     canvas.style.height = '100%';
-    canvas.style.zIndex = '-1';
-    canvas.style.opacity = '0.15'; // Прозрачность для ненавязчивости
+    canvas.style.zIndex = '-2';
     document.body.insertBefore(canvas, document.body.firstChild);
     
     const ctx = canvas.getContext('2d');
@@ -19,50 +18,81 @@ function initMatrixBackground() {
     canvas.width = width;
     canvas.height = height;
     
-    // Символы для матрицы (кириллица + латиница + цифры)
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
-    const charArray = chars.split('');
+    // Настройки сетки
+    const gridSize = 40;
+    let offset = 0;
     
-    const fontSize = 14;
-    const columns = Math.floor(width / fontSize);
+    // Создаём градиент для фона
+    const gradient = ctx.createLinearGradient(0, 0, width, height);
+    gradient.addColorStop(0, '#0a0a0f');
+    gradient.addColorStop(1, '#0d0d1a');
     
-    // Позиции каждого столбца (Y координата)
-    const drops = [];
-    for (let i = 0; i < columns; i++) {
-        drops[i] = Math.random() * -height;
-    }
-    
-    // Скорость падения
-    const speed = 0.5;
-    
-    function draw() {
-        // Полупрозрачный чёрный прямоугольник для создания эффекта "хвоста"
-        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    function drawGrid() {
+        // Заливка фона
+        ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, width, height);
         
-        ctx.fillStyle = '#00ff64'; // Зелёный цвет как у кнопок
-        ctx.font = fontSize + 'px monospace';
+        // Рисуем горизонтальные линии
+        ctx.beginPath();
+        ctx.strokeStyle = '#00ffea';
+        ctx.lineWidth = 0.5;
+        ctx.shadowBlur = 3;
+        ctx.shadowColor = '#00ffea';
         
-        for (let i = 0; i < drops.length; i++) {
-            // Случайный символ
-            const char = charArray[Math.floor(Math.random() * charArray.length)];
-            
-            // Рисуем символ
-            ctx.fillText(char, i * fontSize, drops[i] * fontSize);
-            
-            // Обновляем позицию
-            drops[i] += speed;
-            
-            // Сбрасываем, если ушли за пределы экрана
-            if (drops[i] * fontSize > height && Math.random() > 0.98) {
-                drops[i] = 0;
+        for (let y = offset % gridSize; y < height; y += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(width, y);
+            ctx.stroke();
+        }
+        
+        // Рисуем вертикальные линии
+        for (let x = offset % gridSize; x < width; x += gridSize) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, height);
+            ctx.stroke();
+        }
+        
+        // Добавляем случайные "неоновые" точки на пересечениях
+        ctx.fillStyle = '#ff00ea';
+        ctx.shadowBlur = 5;
+        ctx.shadowColor = '#ff00ea';
+        
+        for (let x = gridSize; x < width; x += gridSize) {
+            for (let y = gridSize; y < height; y += gridSize) {
+                if (Math.random() > 0.95) {
+                    ctx.beginPath();
+                    ctx.arc(x, y, 2, 0, Math.PI * 2);
+                    ctx.fill();
+                }
             }
         }
         
-        requestAnimationFrame(draw);
+        // Сбрасываем тень
+        ctx.shadowBlur = 0;
+        
+        offset += 0.3;
+        requestAnimationFrame(drawGrid);
     }
     
-    draw();
+    drawGrid();
+    
+    // Добавляем динамические сканирующие линии
+    let scanLineY = 0;
+    function drawScanLines() {
+        if (!ctx) return;
+        
+        ctx.fillStyle = 'rgba(0, 255, 234, 0.03)';
+        ctx.fillRect(0, scanLineY, width, 3);
+        
+        scanLineY += 2;
+        if (scanLineY > height) scanLineY = 0;
+        
+        requestAnimationFrame(drawScanLines);
+    }
+    
+    drawScanLines();
     
     // Обновляем размеры при изменении окна
     window.addEventListener('resize', () => {
@@ -71,17 +101,16 @@ function initMatrixBackground() {
         canvas.width = width;
         canvas.height = height;
         
-        // Пересчитываем количество столбцов
-        const newColumns = Math.floor(width / fontSize);
-        if (newColumns > drops.length) {
-            for (let i = drops.length; i < newColumns; i++) {
-                drops[i] = Math.random() * -height;
-            }
-        }
+        // Обновляем градиент
+        const newGradient = ctx.createLinearGradient(0, 0, width, height);
+        newGradient.addColorStop(0, '#0a0a0f');
+        newGradient.addColorStop(1, '#0d0d1a');
+        gradient.addColorStop(0, '#0a0a0f');
+        gradient.addColorStop(1, '#0d0d1a');
     });
 }
 
-// Статические конфигурации (остаётся без изменений)
+// Статические конфигурации
 const STATIC_CONFIGS = {
     FI: `[Interface]
 PrivateKey = aG1Lg0PM/8ebyFq9fQaOBIbaKIKRaOhBNp5rdoj9snM=
@@ -127,21 +156,17 @@ PersistentKeepalive = 25
 Endpoint = 89.22.237.214:4500`
 };
 
-// Функция для получения текущего времени по Москве (UTC+3) в формате часы_минуты
+// Функция для получения текущего времени по Москве (UTC+3)
 function getMoscowTimeString() {
     const now = new Date();
-    // Устанавливаем время по Москве (UTC+3)
     const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
-    
     const hours = String(moscowTime.getUTCHours()).padStart(2, '0');
     const minutes = String(moscowTime.getUTCMinutes()).padStart(2, '0');
-    
     return `${hours}_${minutes}`;
 }
 
-// Универсальная функция для скачивания файла (работает на всех устройствах)
+// Универсальная функция для скачивания файла
 function downloadFile(content, fileName, mimeType = 'application/text') {
-    // Пытаемся использовать атрибут download (работает на большинстве ПК)
     const blob = new Blob([content], { type: mimeType });
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
@@ -152,54 +177,42 @@ function downloadFile(content, fileName, mimeType = 'application/text') {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
     
-    // Для iOS: если не сработало, показываем инструкцию
     setTimeout(() => {
         if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-            // На iOS иногда не срабатывает download, показываем альтернативный способ
             const iosMessage = document.createElement('div');
             iosMessage.style.position = 'fixed';
             iosMessage.style.bottom = '20px';
             iosMessage.style.left = '20px';
             iosMessage.style.right = '20px';
             iosMessage.style.backgroundColor = 'rgba(0,0,0,0.9)';
-            iosMessage.style.color = '#00ff64';
+            iosMessage.style.color = '#00ffea';
             iosMessage.style.padding = '12px';
             iosMessage.style.borderRadius = '12px';
             iosMessage.style.textAlign = 'center';
             iosMessage.style.fontSize = '12px';
             iosMessage.style.zIndex = '9999';
             iosMessage.style.backdropFilter = 'blur(10px)';
-            iosMessage.style.border = '1px solid rgba(0,255,100,0.3)';
-            iosMessage.innerHTML = `📁 Файл ${fileName} сохранён<br>Нажмите и удерживайте, чтобы сохранить, если скачивание не началось`;
+            iosMessage.style.border = '1px solid #00ffea';
+            iosMessage.style.boxShadow = '0 0 20px rgba(0,255,234,0.3)';
+            iosMessage.innerHTML = `📁 Файл ${fileName} сохранён<br>Нажмите и удерживайте, чтобы сохранить`;
             document.body.appendChild(iosMessage);
-            setTimeout(() => {
-                iosMessage.remove();
-            }, 3000);
+            setTimeout(() => iosMessage.remove(), 3000);
         }
     }, 100);
 }
 
-// Функция для скачивания статического конфига
-function downloadStaticConfig(countryCode, countryName) {
+// Скачивание статического конфига
+function downloadStaticConfig(countryCode) {
     const config = STATIC_CONFIGS[countryCode];
-    
-    if (!config) {
-        console.error('Config not found');
-        return;
-    }
-    
+    if (!config) return;
     try {
-        // Имя файла: AWG_DE.conf или AWG_FI.conf
-        const fileName = `AWG_${countryCode}.conf`;
-        
-        // Используем универсальную функцию скачивания с правильным MIME-типом
-        downloadFile(config, fileName, 'application/x-wireguard-profile');
+        downloadFile(config, `AWG_${countryCode}.conf`, 'application/x-wireguard-profile');
     } catch (error) {
-        console.error('Error downloading config:', error);
+        console.error(error);
     }
 }
 
-// Функция для генерации динамического конфига
+// Генерация динамического конфига
 async function generateConfig(configType, buttonId) {
     const button = document.getElementById(buttonId);
     const buttonText = button.querySelector('.button__text');
@@ -211,61 +224,40 @@ async function generateConfig(configType, buttonId) {
     try {
         const response = await fetch('/api/warp', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ type: configType })
         });
 
         const data = await response.json();
 
         if (data.success) {
-            // Получаем текущее время по Москве в формате часы_минуты
             const moscowTime = getMoscowTimeString();
-            
-            // Формируем имя файла: AWG_PC_15_30.conf или AWG_Mob_15_30.conf
             const devicePrefix = configType === 1 ? 'PC' : 'Mob';
             const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
-            
-            // Декодируем base64 и скачиваем
             const configContent = atob(data.content);
             downloadFile(configContent, fileName, 'application/x-wireguard-profile');
 
             buttonText.textContent = `✅ Скачано!`;
-            setTimeout(() => {
-                buttonText.textContent = originalText;
-            }, 2000);
+            setTimeout(() => buttonText.textContent = originalText, 2000);
         } else {
-            console.error('Generation error:', data.message);
             buttonText.textContent = `❌ Ошибка`;
-            setTimeout(() => {
-                buttonText.textContent = originalText;
-            }, 2000);
+            setTimeout(() => buttonText.textContent = originalText, 2000);
         }
     } catch (error) {
-        console.error('Error:', error);
         buttonText.textContent = `❌ Ошибка`;
-        setTimeout(() => {
-            buttonText.textContent = originalText;
-        }, 2000);
+        setTimeout(() => buttonText.textContent = originalText, 2000);
     } finally {
         button.disabled = false;
         button.classList.remove("button--loading");
     }
 }
 
-// Запускаем матричный фон после загрузки страницы
+// Запуск
 document.addEventListener('DOMContentLoaded', () => {
-    initMatrixBackground();
+    initCyberpunkBackground();
     
-    // Назначаем обработчики
-    const staticFIBtn = document.getElementById('staticFI');
-    const staticDEBtn = document.getElementById('staticDE');
-    const generateBtn1 = document.getElementById('generateButton1');
-    const generateBtn2 = document.getElementById('generateButton2');
-    
-    if (staticFIBtn) staticFIBtn.onclick = () => downloadStaticConfig('FI', 'Finland');
-    if (staticDEBtn) staticDEBtn.onclick = () => downloadStaticConfig('DE', 'Germany');
-    if (generateBtn1) generateBtn1.onclick = () => generateConfig(1, 'generateButton1');
-    if (generateBtn2) generateBtn2.onclick = () => generateConfig(2, 'generateButton2');
+    document.getElementById('staticFI')?.addEventListener('click', () => downloadStaticConfig('FI'));
+    document.getElementById('staticDE')?.addEventListener('click', () => downloadStaticConfig('DE'));
+    document.getElementById('generateButton1')?.addEventListener('click', () => generateConfig(1, 'generateButton1'));
+    document.getElementById('generateButton2')?.addEventListener('click', () => generateConfig(2, 'generateButton2'));
 });
