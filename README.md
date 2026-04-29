@@ -9,6 +9,4 @@
 - 📱 **Отдельный тип для мобильных устройств** – удобная структура файлов.
 - 🇫🇮 🇩🇪 **Статические конфиги** – готовые настройки для подключения к серверам.
 
-
-<img width="1003" height="916" alt="pic" src="https://github.com/user-attachments/assets/e7c586c6-d5d6-440a-8ee5-cbb8529f3331" />
-
+<img width="945" height="890" alt="1" src="https://github.com/user-attachments/assets/1dcddce0-288f-41be-bd8e-ac77fd04c1a9" />   
