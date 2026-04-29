@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>AmneziaWG Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,7 +20,6 @@
             position: relative;
         }
 
-        /* Статичный черный фон */
         .static-bg {
             position: fixed;
             top: 0;
@@ -31,13 +30,12 @@
             background: #0a0a0a;
         }
 
-        /* Контейнер */
         .container {
             position: relative;
             z-index: 1;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 40px 20px;
+            padding: 30px 20px 40px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -45,30 +43,37 @@
             align-items: center;
         }
 
-        /* Заголовок */
         .header {
             text-align: center;
-            margin-bottom: 50px;
-            animation: fadeInUp 0.8s ease;
+            margin-bottom: 5px;
         }
 
         .logo {
-            font-size: 48px;
+            font-family: 'Orbitron', sans-serif;
+			font-size: 56px;
             font-weight: 800;
-            color: #0000CC;
-            -webkit-background-clip: text;
-            background-clip: text;
-            margin-bottom: 12px;
+            color: #000000;
+            -webkit-text-stroke: 2px #00ff64;
+            text-stroke: 2px #00ff64;
             letter-spacing: -1px;
+            margin-bottom: 5px;
         }
 
-        .subtitle {
-            font-size: 30px;
-            color: #00ff64;
-            font-weight: 400;
+        .logo-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            line-height: 0; 
         }
 
-        /* Карточки */
+        .logo-image {
+            width: 270px;
+            height: auto;
+            display: block;
+            clip-path: inset(15% 0 15% 0);
+        }
+
         .cards-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -78,7 +83,6 @@
             margin-bottom: 40px;
         }
 
-        /* Стеклянная карточка */
         .card {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(10px);
@@ -121,14 +125,12 @@
             transform: translateY(0);
         }
 
-        /* Иконки карточек */
         .card-icon {
             font-size: 52px;
             margin-bottom: 16px;
             line-height: 1;
         }
 
-        /* Стили для флагов */
         .flag-icon {
             width: 64px;
             height: 48px;
@@ -180,33 +182,12 @@
             margin-bottom: 12px;
         }
 
-        .card-desc {
-            font-size: 14px;
-            color: rgba(255, 255, 255, 0.5);
-            line-height: 1.5;
-            max-width: 200px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        .card-badge {
-            display: inline-block;
-            margin-top: 16px;
-            padding: 6px 12px;
-            background: rgba(0, 255, 100, 0.1);
-            border-radius: 20px;
-            font-size: 12px;
-            color: #00ff64;
-            border: 1px solid rgba(0, 255, 100, 0.3);
-        }
-
-        /* Секционные заголовки - салатовые, одинаковой высоты, красивый шрифт */
         .section-title {
             text-align: center;
             font-size: 28px;
             font-weight: 600;
             color: #00ff64;
-            margin: 48px 0 10px;
+            margin: 20px 0 16px;
             letter-spacing: -0.5px;
             height: 40px;
             line-height: 40px;
@@ -226,7 +207,6 @@
             max-width: 900px;
         }
 
-        /* Кнопки в карточках */
         .card-button {
             width: 100%;
             max-width: 220px;
@@ -260,7 +240,6 @@
             cursor: not-allowed;
         }
 
-        /* Анимация загрузки */
         .button--loading {
             position: relative;
         }
@@ -288,35 +267,10 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Уведомление */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(20px);
-            padding: 14px 28px;
-            border-radius: 50px;
-            border: 1px solid rgba(0, 255, 100, 0.3);
-            color: #00ff64;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 1000;
-            transition: transform 0.3s ease;
-            white-space: nowrap;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-        }
-
-        /* Анимации */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
@@ -324,7 +278,6 @@
             }
         }
 
-        /* Адаптивность */
         @media (max-width: 768px) {
             .container {
                 padding: 20px 16px;
@@ -332,10 +285,11 @@
             
             .logo {
                 font-size: 32px;
+                -webkit-text-stroke: 1.5px #00ff64;
             }
             
-            .subtitle {
-                font-size: 14px;
+            .logo-image {
+                width: 120px;
             }
             
             .card-title {
@@ -344,18 +298,11 @@
             
             .section-title {
                 font-size: 24px;
-                margin: 32px 0 20px;
+                margin: 18px 0 12px;
                 height: 36px;
                 line-height: 36px;
             }
             
-            .toast {
-                white-space: normal;
-                text-align: center;
-                max-width: 90%;
-                font-size: 12px;
-            }
-
             .card-button {
                 max-width: 180px;
                 padding: 10px 16px;
@@ -375,6 +322,9 @@
     <div class="container">
         <div class="header">
             <div class="logo">AmneziaWG Генератор</div>
+            <div class="logo-container">
+                <img class="logo-image" src="https://warp-generator.github.io/logo.svg" alt="AmneziaWG Logo" onerror="this.style.display='none'">
+            </div>
         </div>
 
         <div class="section-title">Динамические конфигурации</div>
@@ -399,7 +349,6 @@
         <div class="section-title">Статические конфигурации</div>
         <div class="cards-grid">
             <div class="card" id="staticFI">
-                <!-- Флаг Финляндии через CSS -->
                 <div class="flag-icon flag-fi"></div>
                 <div class="card-title">Финляндия</div>
                 <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('FI')">
@@ -408,7 +357,6 @@
             </div>
 
             <div class="card" id="staticDE">
-                <!-- Флаг Германии через CSS -->
                 <div class="flag-icon flag-de"></div>
                 <div class="card-title">Германия</div>
                 <button class="card-button" onclick="event.stopPropagation(); downloadStaticConfig('DE')">
@@ -418,22 +366,7 @@
         </div>
     </div>
 
-    <div id="toast" class="toast"></div>
-
     <script>
-        // ========== УВЕДОМЛЕНИЯ ==========
-        function showToast(message, isError = false) {
-            const toast = document.getElementById('toast');
-            toast.textContent = message;
-            toast.style.color = isError ? '#ff4444' : '#00ff64';
-            toast.style.borderColor = isError ? 'rgba(255, 68, 68, 0.3)' : 'rgba(0, 255, 100, 0.3)';
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3000);
-        }
-
-        // ========== СТАТИЧЕСКИЕ КОНФИГИ ==========
         const STATIC_CONFIGS = {
             FI: `[Interface]
 PrivateKey = aG1Lg0PM/8ebyFq9fQaOBIbaKIKRaOhBNp5rdoj9snM=
@@ -479,7 +412,6 @@ PersistentKeepalive = 25
 Endpoint = 89.22.237.214:4500`
         };
 
-        // Функция времени по Москве
         function getMoscowTimeString() {
             const now = new Date();
             const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
@@ -488,7 +420,6 @@ Endpoint = 89.22.237.214:4500`
             return `${hours}_${minutes}`;
         }
 
-        // Скачивание файла
         function downloadFile(content, fileName, mimeType = 'application/text') {
             const blob = new Blob([content], { type: mimeType });
             const url = URL.createObjectURL(blob);
@@ -499,31 +430,17 @@ Endpoint = 89.22.237.214:4500`
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-            
-            // iOS поддержка
-            setTimeout(() => {
-                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    showToast(`Файл ${fileName} сохранён. Нажмите и удерживайте для сохранения.`);
-                }
-            }, 100);
         }
 
-        // Скачивание статического конфига
         window.downloadStaticConfig = function(countryCode) {
             const config = STATIC_CONFIGS[countryCode];
-            if (!config) {
-                showToast('Ошибка: конфиг не найден', true);
-                return;
-            }
-            try {
+            if (config) {
                 downloadFile(config, `AWG_${countryCode}.conf`, 'application/x-wireguard-profile');
-                showToast(`✅ AWG_${countryCode}.conf скачан`);
-            } catch (error) {
-                showToast('❌ Ошибка при скачивании', true);
+            } else {
+                console.error('Config not found');
             }
         };
 
-        // Генерация динамического конфига (эмуляция API с реальным формированием конфига)
         async function generateConfig(configType, buttonId) {
             const button = document.getElementById(buttonId);
             const buttonText = button.querySelector('.button__text');
@@ -531,16 +448,10 @@ Endpoint = 89.22.237.214:4500`
             
             button.disabled = true;
             button.classList.add("button--loading");
-
-            // Имитация задержки сети для реалистичного UX
             await new Promise(resolve => setTimeout(resolve, 800));
 
             try {
-                // Эмуляция бэкенда /api/warp
                 const deviceType = configType === 1 ? 'PC' : 'Mobile';
-                const timestamp = Date.now();
-                
-                // Создаём динамический конфиг на основе типа устройства
                 const interfaceSection = `[Interface]
 PrivateKey = ${generateFakeKey(44)} 
 Address = 10.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 254) + 1}/24
@@ -564,28 +475,16 @@ PersistentKeepalive = 25
 Endpoint = dyn-${deviceType.toLowerCase()}.amneziawg.net:${Math.floor(Math.random() * 10000) + 10000}`;
 
                 const fullConfig = `${interfaceSection}\n\n${peerSection}`;
+                const moscowTime = getMoscowTimeString();
+                const devicePrefix = configType === 1 ? 'PC' : 'Mob';
+                const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
+                downloadFile(fullConfig, fileName, 'application/x-wireguard-profile');
                 
-                // Имитация успешного ответа от сервера
-                const success = true;
-                const data = { success: true, content: btoa(fullConfig), message: 'Конфигурация успешно создана' };
-
-                if (data.success) {
-                    const moscowTime = getMoscowTimeString();
-                    const devicePrefix = configType === 1 ? 'PC' : 'Mob';
-                    const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
-                    const configContent = atob(data.content);
-                    downloadFile(configContent, fileName, 'application/x-wireguard-profile');
-                    
-                    buttonText.textContent = `✅ Скачано!`;
-                    showToast(`✅ Конфиг ${fileName} успешно сгенерирован`);
-                    setTimeout(() => buttonText.textContent = originalText, 2000);
-                } else {
-                    throw new Error(data.message || 'Ошибка генерации');
-                }
+                buttonText.textContent = `✅ Готово!`;
+                setTimeout(() => buttonText.textContent = originalText, 2000);
             } catch (error) {
                 console.error(error);
                 buttonText.textContent = `❌ Ошибка`;
-                showToast(`❌ ${error.message}`, true);
                 setTimeout(() => buttonText.textContent = originalText, 2000);
             } finally {
                 button.disabled = false;
@@ -593,7 +492,6 @@ Endpoint = dyn-${deviceType.toLowerCase()}.amneziawg.net:${Math.floor(Math.rando
             }
         }
 
-        // Вспомогательная функция для генерации псевдо-случайного base64 ключа
         function generateFakeKey(length = 44) {
             const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
             let result = '';
@@ -603,11 +501,10 @@ Endpoint = dyn-${deviceType.toLowerCase()}.amneziawg.net:${Math.floor(Math.rando
             return result;
         }
 
-        // Назначение обработчиков
         document.getElementById('generateButton1').onclick = () => generateConfig(1, 'generateButton1');
         document.getElementById('generateButton2').onclick = () => generateConfig(2, 'generateButton2');
 
-        // Добавляем эффект ripple на карточки
+        // ripple effect
         document.querySelectorAll('.card').forEach(card => {
             card.addEventListener('click', (e) => {
                 if (e.target.tagName === 'BUTTON') return;
