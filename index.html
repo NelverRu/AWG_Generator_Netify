@@ -65,14 +65,16 @@
             margin: 0 auto;
         }
 
-        .dynamic-stack {
-            width: 100%;
-            max-width: 400px;
-            display: flex;
-            flex-direction: column;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
+       .dynamic-stack {
+           width: 100%;
+           max-width: 800px;        /* увеличил, чтобы поместились рядом */
+           display: flex;
+           flex-direction: row;     /* ← меняем column на row */
+           gap: 30px;
+           margin-bottom: 30px;
+           justify-content: center; /* центрируем по горизонтали */
+           flex-wrap: wrap;         /* если экран узкий — перенос на новую строку */
+       }
 
         .card {
             background: rgba(255, 255, 255, 0.03);
