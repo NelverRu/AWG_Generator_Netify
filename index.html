@@ -17,7 +17,6 @@
             min-height: 100vh;
             background: #0a0a0a;
             overflow-x: hidden;
-            position: relative;
         }
 
         .static-bg {
@@ -26,17 +25,16 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0;
             background: #0a0a0a;
-            background-image: radial-gradient(circle at 25% 40%, rgba(0, 255, 100, 0.02) 0%, #0a0a0a 90%);
+            z-index: 0;
         }
 
         .container {
             position: relative;
             z-index: 1;
-            max-width: 700px;
+            max-width: 600px;
             margin: 0 auto;
-            padding: 30px 20px 50px;
+            padding: 40px 20px;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -46,7 +44,7 @@
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 40px;
         }
 
         .logo {
@@ -57,133 +55,80 @@
             -webkit-text-stroke: 2px #00ff64;
             text-stroke: 2px #00ff64;
             letter-spacing: -1px;
-            margin-bottom: 8px;
-            text-shadow: 0 0 12px rgba(0, 255, 100, 0.3);
-        }
-
-        .logo-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 6px 0 0;
-            line-height: 0;
+            margin-bottom: 10px;
         }
 
         .logo-image {
-            width: 200px;
+            width: 180px;
             height: auto;
             display: block;
-            filter: drop-shadow(0 0 8px rgba(0, 255, 100, 0.3));
-            transition: transform 0.3s ease;
+            margin: 0 auto;
         }
 
-        .logo-image:hover {
-            transform: scale(1.02);
-        }
-
-        /* вертикальный список карточек */
         .dynamic-stack {
             width: 100%;
-            max-width: 560px;
+            max-width: 400px;
             display: flex;
             flex-direction: column;
-            gap: 28px;
-            margin: 24px 0 30px;
+            gap: 30px;
+            margin-bottom: 30px;
         }
 
         .card {
-            background: rgba(12, 12, 20, 0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 32px;
-            padding: 34px 28px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border-radius: 28px;
+            padding: 40px 24px;
             border: 1px solid rgba(0, 255, 100, 0.25);
-            transition: all 0.35s ease;
+            transition: all 0.3s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             text-align: center;
-            box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.5);
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 100, 0.12), transparent);
-            transition: left 0.6s ease;
-        }
-
-        .card:hover::before {
-            left: 100%;
         }
 
         .card:hover {
-            transform: translateY(-6px);
-            border-color: rgba(0, 255, 100, 0.7);
-            box-shadow: 0 24px 44px rgba(0, 0, 0, 0.4), 0 0 28px rgba(0, 255, 100, 0.2);
-            background: rgba(20, 20, 30, 0.85);
-        }
-
-        .card:active {
-            transform: translateY(0px);
+            transform: translateY(-5px);
+            border-color: rgba(0, 255, 100, 0.6);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3), 0 0 20px rgba(0, 255, 100, 0.1);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .card-icon {
-            font-size: 68px;
-            margin-bottom: 18px;
-            line-height: 1;
-            filter: drop-shadow(0 4px 12px rgba(0, 255, 100, 0.3));
+            font-size: 64px;
+            margin-bottom: 16px;
         }
 
         .card-title {
-            font-size: 28px;
-            font-weight: 700;
+            font-size: 26px;
+            font-weight: 600;
             color: #00ff64;
-            margin-bottom: 20px;
-            letter-spacing: -0.3px;
-            text-shadow: 0 0 8px rgba(0, 255, 100, 0.4);
+            margin-bottom: 24px;
         }
 
         .card-button {
-            width: 100%;
-            max-width: 260px;
-            background: linear-gradient(125deg, rgba(0, 255, 100, 0.12), rgba(0, 180, 100, 0.2));
-            border: 1.2px solid rgba(0, 255, 100, 0.45);
-            border-radius: 60px;
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.15), rgba(0, 212, 255, 0.15));
+            border: 1px solid rgba(0, 255, 100, 0.4);
+            border-radius: 40px;
             padding: 14px 28px;
-            font-size: 17px;
+            font-size: 16px;
             font-weight: 600;
-            color: #d0ffd0;
+            color: #00ff64;
             cursor: pointer;
-            transition: all 0.25s ease;
+            transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
-            backdrop-filter: blur(8px);
-            text-align: center;
-            letter-spacing: 0.3px;
+            width: 100%;
+            max-width: 220px;
+            margin: 0 auto;
         }
 
         .card-button:hover {
-            background: linear-gradient(125deg, rgba(0, 255, 100, 0.25), rgba(0, 210, 110, 0.35));
-            border-color: #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 100, 0.3);
-            color: #ffffff;
-            transform: scale(1.02);
-        }
-
-        .card-button:active {
-            transform: scale(0.97);
+            background: linear-gradient(135deg, rgba(0, 255, 100, 0.25), rgba(0, 212, 255, 0.25));
+            border-color: #00ff64;
+            box-shadow: 0 0 15px rgba(0, 255, 100, 0.3);
         }
 
         .card-button:disabled {
-            opacity: 0.65;
+            opacity: 0.6;
             cursor: not-allowed;
-            transform: none;
         }
 
         .button--loading {
@@ -197,101 +142,63 @@
         .button--loading::after {
             content: '';
             position: absolute;
-            width: 22px;
-            height: 22px;
+            width: 20px;
+            height: 20px;
             top: 50%;
             left: 50%;
-            margin-left: -11px;
-            margin-top: -11px;
-            border: 2.5px solid #00ff64;
+            margin-left: -10px;
+            margin-top: -10px;
+            border: 2px solid #00ff64;
             border-top-color: transparent;
             border-radius: 50%;
-            animation: buttonSpin 0.7s linear infinite;
+            animation: spin 0.8s linear infinite;
         }
 
-        @keyframes buttonSpin {
+        @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        @keyframes fadeInScale {
+        .error-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            right: 20px;
+            background: rgba(255, 50, 50, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid #ff4444;
+            border-radius: 16px;
+            padding: 12px 20px;
+            color: white;
+            text-align: center;
+            z-index: 9999;
+            font-size: 14px;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
-                transform: translateY(30px) scale(0.96);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
-                transform: translateY(0) scale(1);
+                transform: translateY(0);
             }
-        }
-
-        .card {
-            animation: fadeInScale 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1) forwards;
-        }
-
-        .card:first-child {
-            animation-delay: 0.05s;
-        }
-        .card:last-child {
-            animation-delay: 0.1s;
         }
 
         .footer-note {
-            margin-top: 32px;
-            font-size: 13px;
-            color: #4a5a4f;
-            background: rgba(0, 0, 0, 0.4);
-            padding: 10px 22px;
-            border-radius: 100px;
-            backdrop-filter: blur(4px);
-            border: 0.5px solid rgba(0, 255, 100, 0.2);
             text-align: center;
+            font-size: 12px;
+            color: #4a6a55;
+            margin-top: 20px;
         }
 
-        @media (max-width: 640px) {
-            .container {
-                padding: 20px 16px 36px;
-            }
-            .logo {
-                font-size: 34px;
-                -webkit-text-stroke: 1.5px #00ff64;
-            }
-            .logo-image {
-                width: 150px;
-            }
-            .card-title {
-                font-size: 24px;
-            }
-            .card-icon {
-                font-size: 56px;
-            }
-            .card {
-                padding: 28px 20px;
-            }
-            .card-button {
-                max-width: 220px;
-                padding: 12px 20px;
-                font-size: 15px;
-            }
-            .dynamic-stack {
-                gap: 22px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 28px;
-            }
-            .card-title {
-                font-size: 22px;
-            }
-        }
-
-        /* ripple effect стили добавим глобально */
-        @keyframes rippleEffect {
-            to {
-                transform: translate(-50%, -50%) scale(35);
-                opacity: 0;
-            }
+        @media (max-width: 500px) {
+            .logo { font-size: 32px; -webkit-text-stroke: 1.5px #00ff64; }
+            .logo-image { width: 130px; }
+            .card-title { font-size: 22px; }
+            .card-icon { font-size: 52px; }
+            .card { padding: 30px 20px; }
         }
     </style>
 </head>
@@ -301,123 +208,40 @@
     <div class="container">
         <div class="header">
             <div class="logo">AmneziaWG</div>
-            <div class="logo-container">
-                <img class="logo-image" src="https://warp-generator.github.io/logo.svg" alt="AmneziaWG Logo" onerror="this.style.display='none'">
-            </div>
-            <div style="font-size: 14px; color: #4eae6e; margin-top: 6px; font-weight: 500;">⚡ динамические конфигурации</div>
+            <img class="logo-image" src="https://warp-generator.github.io/logo.svg" alt="logo" onerror="this.style.display='none'">
         </div>
 
-        <!-- Вертикальные карточки: сверху Компьютер, снизу Телефон -->
         <div class="dynamic-stack">
-            <div class="card" id="cardPc">
+            <div class="card">
                 <div class="card-icon">💻</div>
                 <div class="card-title">Компьютер</div>
-                <button id="generateButton1" class="card-button">
+                <button id="generatePc" class="card-button">
                     <span class="button__text">Сгенерировать</span>
                 </button>
             </div>
 
-            <div class="card" id="cardMobile">
+            <div class="card">
                 <div class="card-icon">📱</div>
                 <div class="card-title">Телефон</div>
-                <button id="generateButton2" class="card-button">
+                <button id="generateMobile" class="card-button">
                     <span class="button__text">Сгенерировать</span>
                 </button>
             </div>
         </div>
-
-        <div class="footer-note">
-            ✨ Уникальные динамические параметры · совместимо с AmneziaWG
-        </div>
-    </div>
+      </div>
 
     <script>
+        // Получение московского времени
         function getMoscowTimeString() {
             const now = new Date();
-            // смещение UTC+3 в миллисекундах
-            const moscowOffset = 3 * 60 * 60 * 1000;
-            const moscowDate = new Date(now.getTime() + moscowOffset);
-            const hours = String(moscowDate.getUTCHours()).padStart(2, '0');
-            const minutes = String(moscowDate.getUTCMinutes()).padStart(2, '0');
+            const moscowTime = new Date(now.getTime() + (3 * 60 * 60 * 1000));
+            const hours = String(moscowTime.getUTCHours()).padStart(2, '0');
+            const minutes = String(moscowTime.getUTCMinutes()).padStart(2, '0');
             return `${hours}_${minutes}`;
         }
 
-        // Генератор безопасного pseudo-random ключа в стиле base64 (короткая имитация)
-        // Для AmneziaWG подойдут любые символы, но мы делаем читаемый base64-подобный формат длиной 44
-        function generateFakeKey(length = 44) {
-            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
-            let result = '';
-            const array = new Uint8Array(length);
-            crypto.getRandomValues(array);
-            for (let i = 0; i < length; i++) {
-                result += chars.charAt(array[i] % chars.length);
-            }
-            return result;
-        }
-
-        // Создание полностью динамической конфигурации AmneziaWG с новыми параметрами
-        function buildDynamicConfig(deviceTypeIndex) {
-            // deviceTypeIndex: 1 -> PC, 2 -> Mobile (используется для подписи в endpoint, но можно и универсально)
-            const deviceLabel = deviceTypeIndex === 1 ? 'PC' : 'Mob';
-            
-            // Генерируем динамические значения, которые выглядят реалистично
-            const randomAddressOctet1 = Math.floor(Math.random() * 254) + 1;    // 1-254
-            const randomAddressOctet2 = Math.floor(Math.random() * 254) + 1;
-            const randomAddressOctet3 = Math.floor(Math.random() * 254) + 1;
-            const randomAddressLast = Math.floor(Math.random() * 253) + 2;
-            
-            // Jc, Jmin, Jmax - в стиле AmneziaWG
-            const jcVal = Math.floor(Math.random() * 6) + 3;       // 3-8
-            const jminVal = Math.floor(Math.random() * 50) + 25;   // 25-74
-            const jmaxVal = jminVal + Math.floor(Math.random() * 40) + 15; // jmax больше jmin
-            
-            // S1, S2
-            const s1Val = Math.floor(Math.random() * 150) + 50;
-            const s2Val = Math.floor(Math.random() * 150) + 50;
-            
-            // H параметры — большие числа, часто используемые в WG/Amnezia
-            const h1Val = Math.floor(Math.random() * 900000000) + 100000000;
-            const h2Val = Math.floor(Math.random() * 900000000) + 100000000;
-            const h3Val = Math.floor(Math.random() * 900000000) + 100000000;
-            const h4Val = Math.floor(Math.random() * 900000000) + 100000000;
-            
-            // MTU для разных типов устройств
-            const mtuVal = deviceTypeIndex === 1 ? 1420 : 1380;
-            
-            // Эндпоинт с динамическим портом и зеркальным хостом, но оставим домен динамический
-            const randomPort = Math.floor(Math.random() * 35000) + 12000;
-            // Используем нейтральное доменное имя, в реальности мог бы быть бэкенд, но мы эмулируем полную динамическую генерацию
-            const endpointDomain = `dyn-${deviceLabel.toLowerCase()}.amnezia-dynamic.net`;
-            
-            // Блок Interface
-            const interfaceSection = `[Interface]
-PrivateKey = ${generateFakeKey(44)}
-Address = 10.${randomAddressOctet1}.${randomAddressOctet2}.${randomAddressLast}/24, fd42::${randomAddressOctet3}:${randomAddressLast}/64
-DNS = 1.1.1.1, 8.8.8.8, 2606:4700:4700::1111
-MTU = ${mtuVal}
-Jc = ${jcVal}
-Jmin = ${jminVal}
-Jmax = ${jmaxVal}
-S1 = ${s1Val}
-S2 = ${s2Val}
-H1 = ${h1Val}
-H2 = ${h2Val}
-H3 = ${h3Val}
-H4 = ${h4Val}`;
-
-            // Peer блок (динамические ключи + эндпоинт)
-            const peerSection = `[Peer]
-PublicKey = ${generateFakeKey(44)}
-PresharedKey = ${generateFakeKey(44)}
-AllowedIPs = 0.0.0.0/0, ::/0
-PersistentKeepalive = 25
-Endpoint = ${endpointDomain}:${randomPort}`;
-
-            return `${interfaceSection}\n\n${peerSection}`;
-        }
-
-        // Скачивание файла с поддержкой iOS подсказки (если необходимо)
-        function downloadConfigFile(content, fileName) {
+        // Скачивание файла
+        function downloadFile(content, fileName) {
             const blob = new Blob([content], { type: 'application/x-wireguard-profile' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
@@ -427,172 +251,113 @@ Endpoint = ${endpointDomain}:${randomPort}`;
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(url);
-            
-            // Лёгкое уведомление для iOS (если требуется)
-            setTimeout(() => {
-                if (/iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    const toast = document.createElement('div');
-                    toast.innerText = `📁 ${fileName} сохранён · нажми и удержи, если загрузка не началась`;
-                    toast.style.position = 'fixed';
-                    toast.style.bottom = '20px';
-                    toast.style.left = '20px';
-                    toast.style.right = '20px';
-                    toast.style.backgroundColor = 'rgba(0,0,0,0.85)';
-                    toast.style.color = '#b7ffbf';
-                    toast.style.padding = '12px 16px';
-                    toast.style.borderRadius = '28px';
-                    toast.style.fontSize = '13px';
-                    toast.style.textAlign = 'center';
-                    toast.style.backdropFilter = 'blur(16px)';
-                    toast.style.border = '1px solid #00ff6455';
-                    toast.style.zIndex = '9999';
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 3500);
-                }
-            }, 100);
         }
 
-        // Главная функция генерации динамической конфигурации (полностью локальная, без запросов к API)
-        async function generateDynamicConfig(configType, buttonId) {
+        // Показать ошибку
+        function showError(message) {
+            const toast = document.createElement('div');
+            toast.className = 'error-toast';
+            toast.textContent = `❌ ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Генерация конфига через API (ваш warp.js бэкенд)
+        async function generateConfig(configType, buttonId) {
             const button = document.getElementById(buttonId);
-            if (!button) return;
-            const buttonTextSpan = button.querySelector('.button__text');
-            if (!buttonTextSpan) return;
-            const originalText = buttonTextSpan.textContent;
+            const buttonText = button.querySelector('.button__text');
+            const originalText = buttonText.textContent;
             
-            // Блокируем кнопку и показываем спиннер
             button.disabled = true;
             button.classList.add("button--loading");
-            
-            // Небольшая задержка для имитации генерации (делаем плавный UX)
-            await new Promise(resolve => setTimeout(resolve, 480));
-            
+
             try {
-                // Собираем конфигурацию на основе типа устройства
-                const fullConfigRaw = buildDynamicConfig(configType);
+                // Определяем URL API (если вы не на Vercel, замените на свой)
+                const apiUrl = '/api/warp';
                 
-                // Валидация: убедимся, что конфиг не пустой
-                if (!fullConfigRaw || fullConfigRaw.length < 100) {
-                    throw new Error("Ошибка генерации конфигурации");
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type: configType })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
                 }
-                
-                // Формируем имя файла с московским временем: AWG_[PC|Mob]_ЧЧ_ММ.conf
-                const moscowTime = getMoscowTimeString();
-                const devicePrefix = configType === 1 ? 'PC' : 'Mob';
-                const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
-                
-                // Скачиваем динамический конфиг
-                downloadConfigFile(fullConfigRaw, fileName);
-                
-                // Меняем текст кнопки на успех
-                buttonTextSpan.textContent = `✅ Готово!`;
+
+                const data = await response.json();
+
+                if (data.success && data.content) {
+                    // Декодируем base64 в строку конфига
+                    const configContent = atob(data.content);
+                    const moscowTime = getMoscowTimeString();
+                    const devicePrefix = configType === 1 ? 'PC' : 'Mob';
+                    const fileName = `AWG_${devicePrefix}_${moscowTime}.conf`;
+                    
+                    downloadFile(configContent, fileName);
+                    
+                    buttonText.textContent = `✅ Готово!`;
+                    setTimeout(() => {
+                        if (buttonText) buttonText.textContent = originalText;
+                    }, 2000);
+                } else {
+                    throw new Error(data.message || 'Ошибка генерации конфига');
+                }
+            } catch (error) {
+                console.error('Generation error:', error);
+                showError(error.message || 'Ошибка при генерации. Проверьте соединение с сервером.');
+                buttonText.textContent = `❌ Ошибка`;
                 setTimeout(() => {
-                    if (buttonTextSpan) buttonTextSpan.textContent = originalText;
-                }, 2100);
-            } catch (err) {
-                console.error("Dynamic generation error:", err);
-                buttonTextSpan.textContent = `❌ Сбой`;
-                setTimeout(() => {
-                    if (buttonTextSpan) buttonTextSpan.textContent = originalText;
+                    if (buttonText) buttonText.textContent = originalText;
                 }, 2000);
             } finally {
                 button.disabled = false;
                 button.classList.remove("button--loading");
             }
         }
-        
-        // Инициализация обработчиков для динамических кнопок
-        document.getElementById('generateButton1')?.addEventListener('click', (e) => {
+
+        // Назначение обработчиков
+        document.getElementById('generatePc')?.addEventListener('click', (e) => {
             e.stopPropagation();
-            generateDynamicConfig(1, 'generateButton1');
+            generateConfig(1, 'generatePc');
         });
-        
-        document.getElementById('generateButton2')?.addEventListener('click', (e) => {
+
+        document.getElementById('generateMobile')?.addEventListener('click', (e) => {
             e.stopPropagation();
-            generateDynamicConfig(2, 'generateButton2');
+            generateConfig(2, 'generateMobile');
         });
-        
-        // Эффект "волны" (ripple) при клике на карточку (не мешая кнопкам)
-        function attachRippleToCards() {
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                card.addEventListener('click', function(ev) {
-                    // Игнорируем, если клик был по кнопке или внутри кнопки (чтобы ripple не дублировался)
-                    let target = ev.target;
-                    let isButton = false;
-                    while (target && target !== this) {
-                        if (target.tagName === 'BUTTON') {
-                            isButton = true;
-                            break;
-                        }
-                        target = target.parentElement;
-                    }
-                    if (isButton) return;
-                    
-                    const rect = this.getBoundingClientRect();
-                    const x = ev.clientX - rect.left;
-                    const y = ev.clientY - rect.top;
-                    const ripple = document.createElement('span');
-                    ripple.style.position = 'absolute';
-                    ripple.style.pointerEvents = 'none';
-                    ripple.style.backgroundColor = 'rgba(0, 255, 100, 0.35)';
-                    ripple.style.borderRadius = '50%';
-                    ripple.style.width = '12px';
-                    ripple.style.height = '12px';
-                    ripple.style.transform = 'translate(-50%, -50%) scale(0)';
-                    ripple.style.left = x + 'px';
-                    ripple.style.top = y + 'px';
-                    ripple.style.animation = 'rippleEffect 0.55s ease-out';
-                    ripple.style.zIndex = '5';
-                    this.style.position = 'relative';
-                    this.style.overflow = 'hidden';
-                    this.appendChild(ripple);
-                    setTimeout(() => {
-                        if (ripple && ripple.remove) ripple.remove();
-                    }, 600);
-                });
+
+        // Ripple эффект на карточках
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('click', (e) => {
+                if (e.target.tagName === 'BUTTON') return;
+                const ripple = document.createElement('div');
+                ripple.style.position = 'absolute';
+                ripple.style.borderRadius = '50%';
+                ripple.style.backgroundColor = 'rgba(0, 255, 100, 0.2)';
+                ripple.style.width = '10px';
+                ripple.style.height = '10px';
+                ripple.style.transform = 'translate(-50%, -50%) scale(0)';
+                ripple.style.animation = 'ripple 0.6s ease-out';
+                ripple.style.left = e.clientX - card.getBoundingClientRect().left + 'px';
+                ripple.style.top = e.clientY - card.getBoundingClientRect().top + 'px';
+                card.style.position = 'relative';
+                card.style.overflow = 'hidden';
+                card.appendChild(ripple);
+                setTimeout(() => ripple.remove(), 600);
             });
-        }
-        
-        // Добавляем ключевые кадры анимации ripple, если их нет в style
-        if (!document.querySelector('#dynamicRippleStyle')) {
-            const styleSheet = document.createElement('style');
-            styleSheet.id = 'dynamicRippleStyle';
-            styleSheet.textContent = `
-                @keyframes rippleEffect {
-                    0% {
-                        transform: translate(-50%, -50%) scale(0);
-                        opacity: 0.7;
-                    }
-                    100% {
-                        transform: translate(-50%, -50%) scale(35);
-                        opacity: 0;
-                    }
-                }
-            `;
-            document.head.appendChild(styleSheet);
-        }
-        
-        // Небольшая декоративная анимация при загрузке динамических карточек
-        window.addEventListener('DOMContentLoaded', () => {
-            attachRippleToCards();
-            // Дополнительно: лёгкий кибер-эффект для контейнера лого
-            const logoImg = document.querySelector('.logo-image');
-            if (logoImg && logoImg.complete === false) {
-                logoImg.onload = () => {};
-            }
-            console.log("✅ Динамический генератор AmneziaWG готов (статические конфигурации полностью удалены)");
         });
-        
-        // ======== ПОЛНОСТЬЮ УДАЛЕНЫ СТАТИЧЕСКИЕ КОНФИГИ, НЕТ НИ FI, НИ NL, НИ DE ===========
-        // В коде больше нет статических секций, переменных STATIC_CONFIGS или обработчиков статики.
-        // Карточки с Финляндией и Нидерландами были удалены из HTML и логики.
-        // Остались только кнопки "Компьютер" и "Телефон" с динамической генерацией.
-        // Все функции, связанные со статикой, исключены.
-        
-        // Дополнительная защита — очистка потенциальных глобальных переменных (если что-то осталось)
-        if (window.downloadStaticConfig) delete window.downloadStaticConfig;
-        if (window.STATIC_CONFIGS) delete window.STATIC_CONFIGS;
+
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes ripple {
+                to {
+                    transform: translate(-50%, -50%) scale(30);
+                    opacity: 0;
+                }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
