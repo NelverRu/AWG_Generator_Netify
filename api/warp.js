@@ -28,7 +28,7 @@ class CloudflareWarpClient {
       id: response.result.id,
       token: response.result.token,
     };
-  }
+  }  
 
   async enableWarp(clientId, token) {
     const headers = {
