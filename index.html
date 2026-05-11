@@ -84,6 +84,10 @@
             transition: all 0.3s ease;
             cursor: pointer;
             text-align: center;
+            display: flex;           /* ← добавить */
+            flex-direction: column; /* ← добавить */
+            justify-content: space-between; /* ← добавить - распределяет пространство */
+            min-height: 320px;      /* ← добавить фиксированную высоту */
         }
 
         .card:hover {
@@ -196,7 +200,7 @@
 
         @media (max-width: 500px) {
             .logo { font-size: 32px; -webkit-text-stroke: 1.5px #00ff64; }
-            .logo-image { width: 230px; }
+            .logo-image { width: 180px; }
             .card-title { font-size: 22px; }
             .card-icon { font-size: 52px; }
             .card { padding: 30px 20px; }
